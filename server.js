@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+//SERVICIO PARA TIEMPOS HORA Y FECHA
+const moment = require('moment');
+console.log(moment().format('DD/MM/YYYY'));
+
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
 
