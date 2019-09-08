@@ -11,6 +11,7 @@ console.log(moment().format('DD/MM/YYYY'));
 
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
+const time = require('./controllers/timeController');
 
 /* Use environment defined port on 3000 */
 const port = 3000;
@@ -57,6 +58,14 @@ router.route('/user/:id')
   .put(user.userPUT)
   .delete(user.userDELETE);
 
+router.route('/time')
+  .get(time.timeGET)
+  .post(time.timePOST);
+
+router.route('/time/:id')
+  .get(time.timeGETBYID)
+  .put(time.timePUT)
+  .delete(time.timeDELETE);
 app.listen(port, function () {
   console.log('VVudg listening on port : 3000');
 });
