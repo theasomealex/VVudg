@@ -5,10 +5,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+
 //SERVICIO PARA TIEMPOS HORA Y FECHA
 const moment = require('moment');
 console.log(moment().format('DD/MM/YYYY'));
 
+const authController = require('./controllers/authController');
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
 const time = require('./controllers/timeController');
@@ -50,13 +52,16 @@ router.route('/prueba/:id')
   .delete(prueba.pruebaDELETE);
 
 router.route('/user')
-  .get(user.userGET)
-  .post(user.userPOST);
+  .get(authController.isBasicAuthenticated, user.userGET)
+  .post(authController.isBasicAuthenticated, user.userPOST);
 
 router.route('/user/:id')
-  .get(user.userGETBYID)
-  .put(user.userPUT)
-  .delete(user.userDELETE);
+  .get(authController.isBasicAuthenticated, user.userGETBYID)
+  .put(authController.isBasicAuthenticated, user.userPUT)
+  .delete(authController.isBasicAuthenticated, user.userDELETE);
+
+router.route('/auth')
+  .get(authController.isBasicAuthenticated, user.authUser);
 
 router.route('/time')
   .get(time.timeGET)

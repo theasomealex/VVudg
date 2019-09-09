@@ -1,4 +1,20 @@
 const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const ConfigJwt = require('../models/configJwt');
+
+// Endpoint to create new JWT (token for authentication)
+exports.authUser = function (req, res) {
+    const credentials = {
+        id: req.user._id.valueOf(),
+        sessionCount: req.user.sessionCount
+    };
+
+    const token = jwt.sign(credentials, ConfigJwt.jwtSecret, {
+        expiresIn: 60 * 60 * 24 // expires in 24 hours
+    });
+
+    res.json({ rc: '00', token: token });
+};
 
 // GET - SEARCH
 exports.userGET = function (req, res) {
@@ -32,17 +48,23 @@ exports.userPOST = function (req, res) {
                     res.json({ rc: '98', msg: 'El usuario ya existe' });
                 } else {
                     const user = new User({
-                        name: req.body.name,
+                        username: req.body.username,
+                        password: req.body.password,
+                        mail: req.body.mail,
                         code: req.body.code,
                         plate: req.body.plate,
                         phone: req.body.phone,
                         qr: req.body.qr,
                         career: req.body.career,
-                        mail: req.body.mail,
-                        pass: req.body.pass
+                        status: req.body.status
                     });
                     user.save(function (err, user) {
-                        res.json({ rc: '00', msg: 'El registro del usuario se realizó con éxito', result: user });
+                        if (err && err.code === 11000)
+                            res.json({ rc: "98", msg: "No ha sido posible realizar el registro con la inormación proporcionada.", err: err });
+                        else if (err)
+                            res.json({ rc: "99", msg: "Ocurrió un error al intentar registrar el usuario.", err: err });
+
+                        res.json({ rc: "00", msg: "El registro del usuario se realizó con éxito.", result: user });
                     });
                 }
             });
