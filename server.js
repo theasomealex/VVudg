@@ -5,9 +5,15 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+
+//SERVICIO PARA TIEMPOS HORA Y FECHA
+const moment = require('moment');
+console.log(moment().format('DD/MM/YYYY'));
+
 const authController = require('./controllers/authController');
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
+const time = require('./controllers/timeController');
 
 /* Use environment defined port on 3000 */
 const port = 3000;
@@ -57,6 +63,14 @@ router.route('/user/:id')
 router.route('/auth')
   .get(authController.isBasicAuthenticated, user.authUser);
 
+router.route('/time')
+  .get(time.timeGET)
+  .post(time.timePOST);
+
+router.route('/time/:id')
+  .get(time.timeGETBYID)
+  .put(time.timePUT)
+  .delete(time.timeDELETE);
 app.listen(port, function () {
   console.log('VVudg listening on port : 3000');
 });
