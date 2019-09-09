@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const authController = require('./controllers/authController');
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
 
@@ -45,13 +46,16 @@ router.route('/prueba/:id')
   .delete(prueba.pruebaDELETE);
 
 router.route('/user')
-  .get(user.userGET)
-  .post(user.userPOST);
+  .get(authController.isBasicAuthenticated, user.userGET)
+  .post(authController.isBasicAuthenticated, user.userPOST);
 
 router.route('/user/:id')
-  .get(user.userGETBYID)
-  .put(user.userPUT)
-  .delete(user.userDELETE);
+  .get(authController.isBasicAuthenticated, user.userGETBYID)
+  .put(authController.isBasicAuthenticated, user.userPUT)
+  .delete(authController.isBasicAuthenticated, user.userDELETE);
+
+router.route('/auth')
+  .get(authController.isBasicAuthenticated, user.authUser);
 
 app.listen(port, function () {
   console.log('VVudg listening on port : 3000');
