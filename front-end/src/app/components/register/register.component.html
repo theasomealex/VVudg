@@ -1,0 +1,72 @@
+<div class="format-div">
+    <h2 class="animated fadeIn">REGISTRO</h2>
+    <hr>
+</div>
+
+<form ngNativeValidate [formGroup]="form" (ngSubmit)="register()" class="animated fadeIn justify-content-center">
+    <div class="form-row justify-content-center">
+
+        <div class="form-group col-md-6">
+            <label for="username">Nombre Completo </label>
+            <input formControlName="username" name="username" type="text" class="form-control"
+                placeholder="e.j. Juan Perez Fresco" required>
+            <small class="text-muted">Nombre completo con apellidos.</small>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="code">Código de Estudiante</label>
+            <input formControlName="code" name="code" type="text" class="form-control" placeholder="e.j. 213321124 "
+                required>
+            <small class="text-muted">El código debe contar con 9 dígitos.</small>
+        </div>
+    </div>
+
+    <div class="form-row  justify-content-center">
+        <div class="form-group col-md-6">
+            <label for="plate">Placa Vehícular</label>
+            <input formControlName="plate" name="plate" type="text" class="form-control" placeholder="e.j. JVH-2121"
+                required>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="phone">Celular</label>
+            <input formControlName="phone" name="phone" type="number" class="form-control" placeholder="e.j. 3332244455"
+                required>
+        </div>
+    </div>
+
+    <div class="form-row  justify-content-center">
+        <div class="form-group col-md-10">
+            <label for="career">Carrera</label>
+            <select formControlName="career" name="career" class="form-control" required>
+                <option>...</option>
+                <option>Ingeniería informática</option>
+                <option>Ingeniería Computación</option>
+                <option>Ingeniería Química</option>
+                <option>Ingeniería Biomédica</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row  justify-content-center">
+        <div class="form-group col-md-6">
+            <label for="mail">Correo Electrónico</label>
+            <input formControlName="mail" name="mail" type="email" class="form-control"
+                placeholder="ejemplo@alumnos.udg.mx" required>
+            <small class="text-muted">Por favor, ingresa el correo institucional "ejemplo@alumnos.udg.mx".</small>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="pass">Contraseña</label>
+            <input formControlName="password" name="password" type="password" class="form-control"
+                placeholder="Ingrese la contraseña" required>
+            <small class="text-muted">La contraseña debe contar con al menos 6 u 8 caracteres.</small>
+        </div>
+    </div>
+
+    <div align="center">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+
+    <br>
+</form>
