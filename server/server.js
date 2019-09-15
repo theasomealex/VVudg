@@ -1,16 +1,17 @@
+//  REQUIRES
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+// INICIALIZAR VARIABLES
 const app = express();
 
-
 //SERVICIO PARA TIEMPOS HORA Y FECHA
-const moment = require('moment');
-console.log(moment().format('DD/MM/YYYY'));
+// const moment = require('moment');
+// console.log(moment().format('DD/MM/YYYY'));
 
-const authController = require('./controllers/authController');
+// CONSTANTES DE CONSULTAS
 const prueba = require('./controllers/pruebaController');
 const user = require('./controllers/userController');
 const time = require('./controllers/timeController');
@@ -27,20 +28,19 @@ const router = express.Router();
 mongoose.set('useCreateIndex', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect('mongodb://localhost:27017/vvudg');
+mongoose.connection.openUri('mongodb://localhost:27017/vvudg');
 
 // =====================================================================================================================
-
 /* USE THE BODY-PARSER PACKAGE IN OUR APPLICATION */
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-app.use(cors());
+app.use(bodyParser.json());
 // =====================================================================================================================
 
-app.use('/vvudg', router);
-
+/* CORS */
+app.use(cors({ origin: "http://localhost:4200" }));
+// =====================================================================================================================
 
 router.route('/prueba')
   .get(prueba.pruebaGET)
@@ -52,16 +52,14 @@ router.route('/prueba/:id')
   .delete(prueba.pruebaDELETE);
 
 router.route('/user')
-  .get(authController.isBasicAuthenticated, user.userGET)
-  .post(authController.isBasicAuthenticated, user.userPOST);
+  .get(user.userGET)
+  .post(user.userPOST);
 
 router.route('/user/:id')
-  .get(authController.isBasicAuthenticated, user.userGETBYID)
-  .put(authController.isBasicAuthenticated, user.userPUT)
-  .delete(authController.isBasicAuthenticated, user.userDELETE);
+  .get(user.userGETBYID)
+  .put(user.userPUT)
+  .delete(user.userDELETE);
 
-router.route('/auth')
-  .get(authController.isBasicAuthenticated, user.authUser);
 
 router.route('/time')
   .get(time.timeGET)
@@ -71,6 +69,10 @@ router.route('/time/:id')
   .get(time.timeGETBYID)
   .put(time.timePUT)
   .delete(time.timeDELETE);
+
+
+app.use('/vvudg', router);
+
 app.listen(port, function () {
   console.log('VVudg listening on port : 3000');
 });

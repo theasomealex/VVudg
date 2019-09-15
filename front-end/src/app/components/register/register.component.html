@@ -4,6 +4,7 @@
 </div>
 
 <form ngNativeValidate [formGroup]="form" (ngSubmit)="register()" class="animated fadeIn justify-content-center">
+
     <div class="form-row justify-content-center">
 
         <div class="form-group col-md-6">
@@ -30,7 +31,7 @@
 
         <div class="form-group col-md-4">
             <label for="phone">Celular</label>
-            <input formControlName="phone" name="phone" type="number" class="form-control" placeholder="e.j. 3332244455"
+            <input formControlName="phone" name="phone" type="text" class="form-control" placeholder="e.j. 3332244455"
                 required>
         </div>
     </div>

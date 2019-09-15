@@ -11,6 +11,8 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { AboutComponent } from './components/about/about.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordComponent } from './components/password/password.component';
+import { UserComponent } from './components/user/user.component';
+import { BreadcrumbComponent } from './components/shared/breadcrumb/breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { PasswordComponent } from './components/password/password.component';
     NavbarComponent,
     AboutComponent,
     RegisterComponent,
-    PasswordComponent
+    PasswordComponent,
+    UserComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     BrowserModule,
